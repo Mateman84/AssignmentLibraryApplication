@@ -6,5 +6,7 @@ public class Admin extends Person {
         super(name, role, pin);
     }
 
+    public void addLibrarian(){
 
+    }
 }
