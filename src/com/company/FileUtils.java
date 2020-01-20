@@ -13,11 +13,12 @@ import java.util.List;
 
 public class FileUtils {
 
-    public static void writeObject(Object object){
+    public static void writeObject(Object object, String listName){
         ObjectOutputStream objectOutputStream = null;
         FileOutputStream fileOutputStream = null;
+        listName = listName + ".ser";
         try{
-            fileOutputStream = new FileOutputStream("students.ser", false);
+            fileOutputStream = new FileOutputStream(listName, false);
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(object);
             objectOutputStream.close();

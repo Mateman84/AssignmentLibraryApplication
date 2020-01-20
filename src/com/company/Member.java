@@ -1,9 +1,10 @@
 package com.company;
 
 import java.awt.print.Book;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Member extends Person {
+public class Member extends Person implements Serializable {
 
     private int socialSecurityNumber;
     private ArrayList<Book> borrowedBooks = new ArrayList<>();
