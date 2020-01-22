@@ -29,6 +29,7 @@ public class FileUtils {
     public static Object readObject(String fileName){
         ObjectInputStream objectinputstream = null;
         Object object = null;
+        fileName = fileName + ".ser";
         try {
             FileInputStream streamIn = new FileInputStream(fileName);
             objectinputstream = new ObjectInputStream(streamIn);

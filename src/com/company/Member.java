@@ -4,14 +4,12 @@ import java.awt.print.Book;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Member extends Person implements Serializable {
+public class Member extends Person {
 
-    private int socialSecurityNumber;
     private ArrayList<Book> borrowedBooks = new ArrayList<>();
 
-    public Member(String name, Roles role, int pin, int socialSecurityNumber) {
+    public Member(String name, Roles role, int pin) {
         super(name, role, pin);
-        this.socialSecurityNumber = socialSecurityNumber;
     }
 
     public ArrayList<Book> getBorrowedBooks() {
@@ -25,8 +23,10 @@ public class Member extends Person implements Serializable {
     @Override
     public String toString() {
         return "Member{" +
-                "socialSecurityNumber=" + socialSecurityNumber +
-                ", borrowedBooks=" + borrowedBooks +
+                "Membername: " + getName() +
+                " Memberrole: " + getRole() +
+                " Memberpin: " + getPin() +
+                " borrowedBooks=" + borrowedBooks +
                 '}';
     }
 }
