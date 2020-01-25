@@ -1,8 +1,9 @@
 package com.company;
 
-import java.awt.print.Book;
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import static com.company.FileUtils.readObject;
 
 public class Member extends Person {
 
@@ -10,14 +11,17 @@ public class Member extends Person {
 
     public Member(String name, Roles role, int pin) {
         super(name, role, pin);
+        FileUtils.writeObject(borrowedBooks, name + "s_Borrowed_Books");
     }
 
-    public ArrayList<Book> getBorrowedBooks() {
-        return borrowedBooks;
+    public ArrayList<Book> getBorrowedBooksForMember(Member member) {
+        return borrowedBooks = (ArrayList<Book>)(readObject(member.getName() + "s_Borrowed_Books"));
     }
 
-    public void setBorrowedBooks(ArrayList<Book> borrowedBooks) {
-        this.borrowedBooks = borrowedBooks;
+    public void addBookToBorrowedBooks(Book book, Member member){
+        borrowedBooks = (ArrayList<Book>)(readObject(member.getName() + "s_Borrowed_Books"));
+        borrowedBooks.add(book);
+        FileUtils.writeObject(borrowedBooks, member.getName() + "s_Borrowed_Books");
     }
 
     @Override
