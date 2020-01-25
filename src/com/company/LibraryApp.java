@@ -10,6 +10,8 @@ public class LibraryApp {
     private ArrayList<Librarian> librarians = new ArrayList<>();
     private ArrayList<Member> members = new ArrayList<>();
     private ArrayList<Book> books = new ArrayList<>();
+    private ArrayList<Book> tempBookList = new ArrayList<>();
+    private Person loggedInUser;
     private String title;
     private String authorName;
     private String userName;
@@ -26,10 +28,12 @@ public class LibraryApp {
         userName = scanner.nextLine();
         System.out.println("Enter your pin: ");
         userPin = scanner.nextInt();
-        Person loggedInUser = whatAreYou(userName, userPin);
-        System.out.println(loggedInUser);
-
-
+        loggedInUser = whatAreYou(userName, userPin);
+        if(loggedInUser != null){
+            mainMenu(loggedInUser);
+        } else {
+            System.out.println("Wrong username or password");
+        }
     }
 
     public Person whatAreYou(String userName, int userPin){
@@ -46,14 +50,18 @@ public class LibraryApp {
         return null;
     }
 
-    public void mainMenu() {
+    public void mainMenu(Person person) {
+        while(true){
         books = (ArrayList<Book>)(readObject("books"));
-        System.out.println("Welcome to library");
+        System.out.println("Welcome " + person.getRole() + person.getName() + " to library");
         System.out.println("What would you like to do?");
         System.out.println("1. Show available items.");
         System.out.println("2. Find out more about a book.");
         System.out.println("3. Find book by author.");
         System.out.println("4. Show Customers");
+        System.out.println("5. Show borrowed Books");
+        System.out.println("6. Borrow Book");
+        System.out.println("9. Exit program");
         choice = scanner.nextInt();
         switch (choice) {
             case (1):
@@ -73,6 +81,20 @@ public class LibraryApp {
                 System.out.println("Here is all the customers in the library: ");
                 showAllMembersOfLibrary();
                 break;
+            case(5):
+                System.out.println("Here is all the books that " + person.getName() + " has borrowed");
+                showBorrowedBooks();
+                break;
+            case(6):
+                scanner.nextLine();
+                System.out.println("Enter title of book you want to borrow: ");
+                String bookToBorrow = scanner.nextLine();
+                borrowBook(bookToBorrow);
+                break;
+            case (9):
+                System.out.println("Goodbye!");
+                System.exit(0);
+        }
         }
     }
 
@@ -119,13 +141,20 @@ public class LibraryApp {
         return null;
     }
 
-    public Book borrowBook(){
-
-        return null;
+    public void borrowBook(String title){
+        for(Member member:members){
+            if(userName.equalsIgnoreCase(member.getName()) && userPin == member.getPin()){
+                member.addBookToBorrowedBooks(findBookWithTitle(title), member);
+            }
+        }
     }
 
-    public ArrayList showBorrowedBooks(String memberName){
-        return null;
+    public void showBorrowedBooks(){
+        for(Member member:members){
+            if(userName.equalsIgnoreCase(member.getName()) && userPin == member.getPin()){
+                System.out.println(member.getBorrowedBooksForMember(member));
+            }
+        }
     }
 
     public Book returnBorrowedBook(){
