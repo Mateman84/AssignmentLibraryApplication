@@ -19,9 +19,23 @@ public class Member extends Person {
     }
 
     public void addBookToBorrowedBooks(Book book, Member member){
-        borrowedBooks = (ArrayList<Book>)(readObject(member.getName() + "s_Borrowed_Books"));
+        borrowedBooks = getBorrowedBooksForMember(member);
         borrowedBooks.add(book);
         FileUtils.writeObject(borrowedBooks, member.getName() + "s_Borrowed_Books");
+    }
+    public void returnBookToLibrary(String title,Member member){
+        borrowedBooks = getBorrowedBooksForMember(member);
+        borrowedBooks.remove(borrowedBooks.indexOf(findBorrowedBookByTitle(title)));
+        FileUtils.writeObject(borrowedBooks, member.getName() + "s_Borrowed_Books");
+    }
+
+    public Book findBorrowedBookByTitle(String title){
+        for (Book book:borrowedBooks) {
+            if (title.equalsIgnoreCase(book.getTitle())){
+                return book;
+            }
+        }
+        return null;
     }
 
     @Override
